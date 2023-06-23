@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 import cv2
-import config
-import os, sys
 import time
 import numpy as np
+import os, sys
+project_root = os.path.abspath(os.path.join(os.path.dirname((os.path.dirname(__file__)))))
+sys.path.append(project_root)
 
+import config
 camera = config.cameras[0]
 cap = cv2.VideoCapture(camera['url'])
 
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+
+sys.path
 output_root = f"{project_root}/output"
 camera['output_folder'] = f"{output_root}/{camera['folder']}"
 
@@ -38,10 +41,10 @@ while True:
       diff = cv2.absdiff(gray_frame, prev_frame)
       changed_pixels = np.sum(diff > 0)
       total_pixels = diff.shape[0] * diff.shape[1]
-      changed_percent = (changed_pixels / total_pixels) * 100
+      changed_percent = (changed_pixels / total_pixels)
       count += 1
       # print(changed_percent)
-      if changed_percent > 15: should_save = True
+      if changed_percent > config.detection_thershold: should_save = True
     else:
       should_save = True
 

@@ -15,3 +15,4 @@ cameras = [
     "url": "rtsp://admin:admin123@192.168.1.206:554/cam/realmonitor?channel=1&subtype=0"
   }
 ]
+detection_thershold = 0.15

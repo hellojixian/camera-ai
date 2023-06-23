@@ -2,30 +2,12 @@
 import cv2
 import config
 import multiprocessing as mp
+from core.image_capture import image_capture
+from core.image_processor import image_processor
 
 def process_camera(camera_id):
   camera = config.cameras[camera_id]
-  print(camera)
-  # # Create a VideoCapture object
-  # cap = cv2.VideoCapture(camera['url'])
-
-  # while True:
-  #     # Read the video stream frame by frame
-  #     ret, frame = cap.read()
-
-  #     # Check if the frame was successfully captured
-  #     if not ret:
-  #         break
-
-  #     # Display the frame
-  #     cv2.imshow('RTSP Stream', frame)
-
-  #     # Check for key press and exit if 'q' is pressed
-  #     if cv2.waitKey(1) & 0xFF == ord('q'):
-  #         break
-
-  # # Release the VideoCapture object and close any open windows
-  # cap.release()
+  image_capture(camera=camera, callback=image_processor)
   return
 
 if __name__ == '__main__':
@@ -33,12 +15,12 @@ if __name__ == '__main__':
   manager = mp.Manager()
 
   # Create a multiprocessing Pool
-  pool = manager.Pool(processes=len(config.camera_urls))
+  pool = manager.Pool(processes=len(config.cameras))
 
   results = []
   # using pymongo for faster query
 
-  for camera_id in range(len(config.camera_urls)):
+  for camera_id in range(len(config.cameras)):
     result = pool.apply_async(process_camera, (camera_id,))
     results.append(result)
 
