@@ -4,7 +4,7 @@ import config
 import multiprocessing as mp
 
 def process_camera(camera_id):
-  camera = config.camera_urls[camera_id]
+  camera = config.cameras[camera_id]
   print(camera)
   # # Create a VideoCapture object
   # cap = cv2.VideoCapture(camera['url'])
